@@ -24,14 +24,16 @@ Discutons des différentes manières dont vous avez réalisé ce programme.
 
 ## Etape 3
 
-Transformons votre code ensemble pour y introduire une **classe** `Snail` que l'on utilisera pour fabriquer (instancier) un **objet** `snail`
+Transformons votre code ensemble pour y introduire une **classe** `Drone` que l'on utilisera pour fabriquer (instancier) un **objet** `drone`
 
 Assurez-vous que vous avez bien compris les concepts de classe et d'objet.  
 **Rappel:** quand vous avez "bien compris" quelque chose, cela signifie que vous vous sentez capable de l'expliquer à quelqu'un.
 
 ## Etape 4
 
-Modifiez votre code pour réaliser une course à deux drones. Pour mettre du suspense dans la course, faites en sorte qu'un drone décide parfois de prendre une pause au lieu d'avancer.  
+Modifiez votre code pour réaliser une course à 5 drones au moyen d'un tableau de drones. (Attention: chacun doit avoir son altitude propre!)
+
+Pour mettre du suspense dans la course, faites en sorte qu'un drone décide parfois de prendre une pause au lieu d'avancer.  
 Sa décision sera aléatoire:
 
 ```
@@ -45,30 +47,9 @@ if (rand.Next(1,10) == 1) ...
 
 Réalisez l'un ou l'autre des défis suivants:
 
-1. Le drone fait demi-tour lorsqu'il atteint le bord de l'écran
-1. Il fait demi-tour à chaque fois qu'on tape une touche
-1. Il se déplace de plus en plus lentement au fur et à mesure que ses forces diminuent (attention: il ne peut toujours se déplacer que d'une case à la fois)
-1. Il saute quand on frappe la barre d'espace
-1. On le voit de dessus et il se déplace sur deux axes au lieu d'un. Il pourrait ressembler à ça:  
-   `x`  
-   `O >` &nbsp; &nbsp; &nbsp; vers la droite  
-   `x`  
-   &nbsp;
-
-   
-   `  x`  
-   `< O` &nbsp; &nbsp; &nbsp; vers la gauche  
-   `  x`  
-   &nbsp;
-
-   
-   `  ^`  
-   `x O x` &nbsp; &nbsp; &nbsp; vers le haut
-   &nbsp;
-
-   
-   `x O x` &nbsp; &nbsp; &nbsp; vers le bas  
-   `  v`  
-
+1. Un drone fait demi-tour lorsqu'il atteint le bord de l'écran
+1. Un drone choisi au hasard fait demi-tour à chaque fois qu'on tape une touche
+1. Un drone se déplace de plus en plus lentement au fur et à mesure que ses forces diminuent (attention: il ne peut toujours se déplacer que d'une case à la fois)
+1. Il monte ou descend d'une ligne quand on frappe les flèches haut/bas
 1. Il a une apparence plus élaborée (comme [ça](https://art.ngfiles.com/thumbnails/923000/923088_full.png?f1560570321) par exemple)
 1. ... ou toute autre idée qui vous vient

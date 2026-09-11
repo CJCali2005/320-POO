@@ -10,3 +10,5 @@
 - Lorsque la batterie atteint un niveau de charge bas, le drone se met en état `LOW_BATTERY`. Quand il est dans cet état, son objectif est la borne de recharge.
 - Quand le drone atteint la borne, il passe en état `LOADING`. Il arrête de se déplacer et sa batterie se recharge au lieu de se décharger (la recharge est 10 fois plus rapide que la décharge)
 - Quand le la batterie du drone est pleine, il se remet en `ROAMING`
+
+Indice: les attributs privés de position \_x et \_y permettent de dessiner le drone. Mais la position à prendre en compte pour ses déplacements/collisions est en son centre !  Créez deux propriétés publiques `X` et `Y` qui donnent la position réelle du drone dans l'espace aérien. 
