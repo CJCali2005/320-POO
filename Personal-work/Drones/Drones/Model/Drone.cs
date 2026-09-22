@@ -38,12 +38,6 @@ namespace Drones
             charge = alea.Next(1000); // La charge initiale de la batterie est choisie aléatoirement
         }
 
-        // géneration de valeur aléatoire
-        public static int RandomValue()
-        {
-            int random = random.Next();
-            return random;
-        }
 
         #region ================ Modelisation du drone et de son comportement ================
 
