@@ -7,6 +7,10 @@ namespace Drones
     // Cette partie de la classe Drone définit ce qu'est un drone par un modèle numérique
     public partial class Drone
     {
+
+        private int objectifX;
+        private int objectifY;
+
         private int charge;                           // La charge actuelle de la batterie
         public int Charge {
             get { return charge; } set { charge = value; }
@@ -36,7 +40,10 @@ namespace Drones
             this.x = x;
             this.y = y;
             this.name = name;
-            charge = alea.Next(Config.MAX_LOAD); // La charge initiale de la batterie est choisie aléatoirement
+            charge = Config.MAX_LOAD; // La charge initiale de la batterie est choisie aléatoirement
+
+            objectifX = alea.Next(0, Config.AIRSPACE_WIDTH);
+            objectifY = alea.Next(0, Config.AIRSPACE_HEIGHT);
         }
 
 
@@ -46,10 +53,22 @@ namespace Drones
         // que 'interval' millisecondes se sont écoulées
         public void Update(int interval)
         {
-            if (charge <= 0) return;                     // S'il n'a plus de charge, il ne peut plus bouger
-            Random alea = new Random();
+            if (charge <= 0) return; // S'il n'a plus de charge, il ne peut plus bouger
+
+            double distanceAxeX = objectifX - x;
+            double distanceAxeY = objectifY - y;
+            double distanceReelDiagonale = Math.Sqrt(distanceAxeX * distanceAxeX + distanceAxeY * distanceAxeY);
+            double step = (double)Config.SPEED * interval / 1000;
+            Console.WriteLine(step);
+
+            if (distanceReelDiagonale < 1 ) return;
+
+            x += (int)(distanceAxeX / distanceReelDiagonale * step);
+            y += (int)(distanceAxeY / distanceReelDiagonale * step);
+                                 
+            /*Random alea = new Random();
             x += 2;                                    // Il s'est déplacé de 2 pixels vers la droite
-            y += alea.Next(-2, 3);                     // Il s'est déplacé d'une valeur aléatoire vers le haut ou le bas
+            y += alea.Next(-2, 3);                     // Il s'est déplacé d'une valeur aléatoire vers le haut ou le bas*/
             charge--;                                  // Il a dépensé de l'énergie
         }
 
@@ -70,7 +89,7 @@ namespace Drones
         // De manière textuelle
         public override string ToString()
         {
-            return $"{name} ({((int)((double)charge / 1000 * 100)).ToString()}%)";
+            return $"{name} ({(int)((double)charge / Config.MAX_LOAD * 100)}%)";
         }
         #endregion
 

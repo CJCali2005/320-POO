@@ -9,7 +9,8 @@ namespace Drones.Configuration
     public static class Config
     {
         public const int MAX_LOAD = 100;
-        public const int AIRSPACE_WIDTH = 0;
-        public const int AIRSPACE_HEIGHT = 0;
+        public const int AIRSPACE_WIDTH = 1200;
+        public const int AIRSPACE_HEIGHT = 600;
+        public const int SPEED = 100;
     }
 }
