@@ -1,3 +1,5 @@
+using Drones.Configuration;
+
 namespace Drones
 {
     // La classe AirSpace représente le territoire au dessus duquel les drones peuvent voler
@@ -6,7 +8,7 @@ namespace Drones
 
     public partial class AirSpace : Form
     {
-        public static readonly int WIDTH = 1200;        // Dimensions of the airspace
+        public static readonly int WIDTH = 1200;       
         public static readonly int HEIGHT = 600;
 
         // La flotte est l'ensemble des drones qui évoluent dans notre espace aérien
@@ -19,6 +21,10 @@ namespace Drones
         public AirSpace(List<Drone> fleet)
         {
             InitializeComponent();
+            this.Width = Config.AIRSPACE_WIDTH;  //
+                                                 // J'éspère que c'est ça que vous demannder je n'ai pas bien compris...
+            this.Height = Config.AIRSPACE_HEIGHT;//
+
             // Gets a reference to the current BufferedGraphicsContext
             currentContext = BufferedGraphicsManager.Current;
             // Creates a BufferedGraphics instance associated with this form, and with

@@ -1,5 +1,6 @@
 ﻿using Drones.Helpers;
 using Drones.Properties;
+using Drones.Configuration;
 
 namespace Drones
 {
@@ -35,7 +36,7 @@ namespace Drones
             this.x = x;
             this.y = y;
             this.name = name;
-            charge = alea.Next(1000); // La charge initiale de la batterie est choisie aléatoirement
+            charge = alea.Next(Config.MAX_LOAD); // La charge initiale de la batterie est choisie aléatoirement
         }
 
 
