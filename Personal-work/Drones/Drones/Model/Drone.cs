@@ -8,8 +8,11 @@ namespace Drones
     public partial class Drone
     {
 
-        private int objectifX;
-        private int objectifY;
+        private int _objectifX; // distance horizontale de l'objectif
+        private int _objectifY; // distance Verticale de l'objectif
+        private State _etatDuDrone; //   
+
+        private enum State { CRASH, LOW_BATTERY, LOADING, ROAMING };
 
         private int charge;                           // La charge actuelle de la batterie
         public int Charge {
@@ -42,8 +45,8 @@ namespace Drones
             this.name = name;
             charge = Config.MAX_LOAD; // La charge initiale de la batterie est choisie aléatoirement
 
-            objectifX = alea.Next(0, Config.AIRSPACE_WIDTH);
-            objectifY = alea.Next(0, Config.AIRSPACE_HEIGHT);
+            _objectifX = alea.Next(0, Config.AIRSPACE_WIDTH);
+            _objectifY = alea.Next(0, Config.AIRSPACE_HEIGHT);
         }
 
 
@@ -53,15 +56,28 @@ namespace Drones
         // que 'interval' millisecondes se sont écoulées
         public void Update(int interval)
         {
+            this._etatDuDrone = State.ROAMING;
+
             if (charge <= 0) return; // S'il n'a plus de charge, il ne peut plus bouger
 
-            double distanceAxeX = objectifX - x;
-            double distanceAxeY = objectifY - y;
+            double distanceAxeX = _objectifX - x;
+            double distanceAxeY = _objectifY - y;
             double distanceReelDiagonale = Math.Sqrt(distanceAxeX * distanceAxeX + distanceAxeY * distanceAxeY);
             double step = (double)Config.SPEED * interval / 1000;
-            Console.WriteLine(step);
+            // Console.WriteLine(step);
 
-            if (distanceReelDiagonale < 1 ) return;
+            if (distanceReelDiagonale == 0 && this._etatDuDrone == State.ROAMING)
+            {
+                Random nouvelPosition = new Random();
+
+                _objectifX = nouvelPosition.Next(x, Config.AIRSPACE_WIDTH);
+                _objectifY = nouvelPosition.Next(y, Config.AIRSPACE_HEIGHT);
+
+                distanceAxeX = _objectifX - x;
+                distanceAxeY = _objectifY - y;
+
+                distanceReelDiagonale = Math.Sqrt(distanceAxeX * distanceAxeX + distanceAxeY * distanceAxeY);
+            }
 
             x += (int)(distanceAxeX / distanceReelDiagonale * step);
             y += (int)(distanceAxeY / distanceReelDiagonale * step);
