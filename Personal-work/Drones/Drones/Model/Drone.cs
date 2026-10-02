@@ -10,9 +10,10 @@ namespace Drones
 
         private int _objectifX; // distance horizontale de l'objectif
         private int _objectifY; // distance Verticale de l'objectif
-        private State _etatDuDrone; //   
+         
 
         private enum State { CRASH, LOW_BATTERY, LOADING, ROAMING };
+        private State _etatDuDrone { get; }
 
         private int charge;                           // La charge actuelle de la batterie
         public int Charge {
@@ -39,6 +40,8 @@ namespace Drones
         // Constructeur
         public Drone(int x, int y, string name)
         {
+            this._etatDuDrone = State.ROAMING;
+
             Random alea = new Random();
             this.x = x;
             this.y = y;
@@ -47,8 +50,9 @@ namespace Drones
 
             _objectifX = alea.Next(0, Config.AIRSPACE_WIDTH);
             _objectifY = alea.Next(0, Config.AIRSPACE_HEIGHT);
-        }
 
+
+        }
 
         #region ================ Modelisation du drone et de son comportement ================
 
@@ -56,7 +60,6 @@ namespace Drones
         // que 'interval' millisecondes se sont écoulées
         public void Update(int interval)
         {
-            this._etatDuDrone = State.ROAMING;
 
             if (charge <= 0) return; // S'il n'a plus de charge, il ne peut plus bouger
 
@@ -66,17 +69,17 @@ namespace Drones
             double step = (double)Config.SPEED * interval / 1000;
             // Console.WriteLine(step);
 
-            if (distanceReelDiagonale == 0 && this._etatDuDrone == State.ROAMING)
+            if (distanceReelDiagonale <= step && this._etatDuDrone == State.ROAMING)
             {
                 Random nouvelPosition = new Random();
 
-                _objectifX = nouvelPosition.Next(x, Config.AIRSPACE_WIDTH);
-                _objectifY = nouvelPosition.Next(y, Config.AIRSPACE_HEIGHT);
+                _objectifX = nouvelPosition.Next(0, Config.AIRSPACE_WIDTH);
+                _objectifY = nouvelPosition.Next(0, Config.AIRSPACE_HEIGHT);
 
                 distanceAxeX = _objectifX - x;
                 distanceAxeY = _objectifY - y;
 
-                distanceReelDiagonale = Math.Sqrt(distanceAxeX * distanceAxeX + distanceAxeY * distanceAxeY);
+                distanceReelDiagonale = Math.Sqrt((distanceAxeX * distanceAxeX) + (distanceAxeY * distanceAxeY));
             }
 
             x += (int)(distanceAxeX / distanceReelDiagonale * step);
